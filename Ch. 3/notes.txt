@@ -1,0 +1,6 @@
+/*
+ * In this chapter, we will be building the layout for static elements in Flutter while showing how to build widget trees.
+ * Everything in Flutter should be thought of as living in a tree structure.
+ * Every widget in Flutter is supposed to perform a single small task.
+ * On their own, widgets are classes that perform tasks on the user interface.
+ */
