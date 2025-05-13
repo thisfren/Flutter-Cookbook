@@ -1,6 +1,6 @@
 // /lib/profile_screen.dart
 
-import 'package:flutter/material.dart' show BoxFit, BuildContext, ClipOval, Column, Container, Image, Scaffold, StatelessWidget, Widget;
+import 'package:flutter/material.dart' show BoxFit, BuildContext, ClipOval, Column, Container, EdgeInsets, FontWeight, Image, Padding, Row, Scaffold, StatelessWidget, Text, TextStyle, Widget;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
       height: 200,
       child: ClipOval(
         child: Image.asset(
-          'assets/khachik_simonian_beach_unsplash.jpg',
+          'assets/jose-alejandro-cuffia-dog-unsplash.jpg',
           fit: BoxFit.fitWidth
         )
       )
@@ -32,7 +32,31 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileDetails(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Wolfram Barkovich',
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.w600)
+          ),
+          _buildDetailsRow('Age', '4'),
+          _buildDetailsRow('Status', 'Good Boy')
+        ]
+      )
+    );
+  }
+
+  Widget _buildDetailsRow(String heading, String value) {
+    return Row(
+      children: <Widget>[
+        Text(
+          '$heading: ',
+          style: TextStyle(fontWeight: FontWeight.bold)
+        ),
+        Text(value)
+      ]
+    );
   }
 
   Widget _buildActions(BuildContext context) {
