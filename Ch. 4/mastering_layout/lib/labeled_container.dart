@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext, Center, Color, Container, Key, StatelessWidget, Text, TextStyle, Widget, required;
+import 'package:flutter/material.dart' show BuildContext, Center, Color, Container, StatelessWidget, Text, TextStyle, Widget;
 
 class LabeledContainer extends StatelessWidget {
   final double? width;
@@ -8,13 +8,13 @@ class LabeledContainer extends StatelessWidget {
   final Color? textColor;
 
   const LabeledContainer({
-    Key? key,
+    super.key,
     this.width,
     this.height = double.infinity,
     this.color,
     required this.text,
     this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

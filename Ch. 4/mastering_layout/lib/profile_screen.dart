@@ -7,6 +7,7 @@
  */
 import 'package:flutter/material.dart' show BoxFit, BuildContext, ClipOval, Column, Container, EdgeInsets, FontWeight, Icon, IconData, Icons, Image, MainAxisAlignment, Padding, Row, Scaffold, Stack, StatelessWidget, Text, TextStyle, Transform, Widget;
 import 'package:flutter/rendering.dart';
+import 'package:mastering_layout/star.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -64,6 +65,7 @@ class ProfileScreen extends StatelessWidget {
             'Wolfram Barkovich',
             style: TextStyle(fontSize: 35, fontWeight: FontWeight.w600)
           ),
+          StarRating(value: 5),
           _buildDetailsRow('Age', '4'),
           _buildDetailsRow('Status', 'Good Boy')
         ]
