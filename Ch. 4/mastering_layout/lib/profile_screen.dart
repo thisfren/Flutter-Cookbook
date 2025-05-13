@@ -1,6 +1,6 @@
 // /lib/profile_screen.dart
 
-import 'package:flutter/material.dart' show BoxFit, BuildContext, ClipOval, Column, Container, EdgeInsets, FontWeight, Image, Padding, Row, Scaffold, StatelessWidget, Text, TextStyle, Widget;
+import 'package:flutter/material.dart' show BoxFit, BuildContext, ClipOval, Column, Container, EdgeInsets, FontWeight, Icon, IconData, Icons, Image, MainAxisAlignment, Padding, Row, Scaffold, StatelessWidget, Text, TextStyle, Widget;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -60,6 +60,25 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return Container();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        _buildIcon(Icons.restaurant, 'Feed'),
+        _buildIcon(Icons.favorite, 'Pet'),
+        _buildIcon(Icons.directions_walk, 'Walk'),
+      ]
+    );
+  }
+
+  Widget _buildIcon(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Icon(icon, size: 40),
+          Text(text)
+        ]
+      )
+    );
   }
 }
