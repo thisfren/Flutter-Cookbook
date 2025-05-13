@@ -7,9 +7,9 @@
  * You can also use the Scaffold widget to create a screen that is not a full-screen app.
  * Widgets that do not begin with Scaffold are intended to be components used to compose screens.
  */
-import 'package:flutter/material.dart' show AppBar, AspectRatio, BuildContext, Center, Colors, Column, Container, CrossAxisAlignment, Drawer, EdgeInsets, Icon, Icons, Padding, Scaffold, StatelessWidget, Text, Widget;
+import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Colors, Column, Container, CrossAxisAlignment, Drawer, EdgeInsets, Icon, Icons, Image, Padding, Scaffold, StatelessWidget, Text, Widget;
 
-import 'package:flutter_layout/immutable_widget.dart' show ImmutableWidget;
+// import 'package:flutter_layout/immutable_widget.dart' show ImmutableWidget;
 import 'package:flutter_layout/text_layout.dart' show TextLayout;
 
 class BasicScreen extends StatelessWidget {
@@ -28,6 +28,7 @@ class BasicScreen extends StatelessWidget {
           )
         ]
       ),
+      /*
       // body: Center( // A Center widget centers its child both horizontally and vertically
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,6 +41,14 @@ class BasicScreen extends StatelessWidget {
             aspectRatio: 1.0,
             child: ImmutableWidget(),
           ),
+          TextLayout()
+        ]
+      ),
+      */
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Image.asset('assets/khachik_simonian_beach_unsplash.jpg'),
           TextLayout()
         ]
       ),

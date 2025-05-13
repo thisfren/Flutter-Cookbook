@@ -1,3 +1,4 @@
+// src/lib/text_layout.dart
 /*
  * Flutter has a powerful and fast text engine that can render all the rich text that you'd expect from a modern mobile framework.
  * In this recipe, we will be drawing text with Flutter's two primary widgets – Text and RichText.
@@ -8,9 +9,8 @@
  * Text widgets respond to the text to speech synthesizers and will even scale their font size up and down if the user decides to adjust the system's font size.
  */
 
-import 'dart:ui';
-
-import 'package:flutter/material.dart' show BuildContext, Colors, Column, CrossAxisAlignment, Divider, RichText, StatelessWidget, Text, TextSpan, TextStyle, Theme, Widget;
+import 'package:flutter/material.dart' show BuildContext, Colors, Column, CrossAxisAlignment, Divider, FontWeight, RichText, StatelessWidget, Text, TextDecoration, TextDecorationStyle, TextSpan, TextStyle, Theme, Widget;
+import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
 class TextLayout extends StatelessWidget {
   const TextLayout({super.key});
@@ -22,7 +22,7 @@ class TextLayout extends StatelessWidget {
       children: <Widget>[
         Text(
           'Hello, World!',
-          style: TextStyle(fontSize: 16),
+          style: GoogleFonts.leckerliOne(fontSize: 40),
         ),
         Text(
           'Text can wrap without an issue',
