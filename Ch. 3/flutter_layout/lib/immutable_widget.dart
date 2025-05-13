@@ -1,8 +1,6 @@
 /*
  * There is some boilerplate with stateless widgets, but you can create themwith a simple code snippet.
  * Just type stless. Hit Enter on your keyboard and the template will appear.
- * 
- * 
  */
 
 import 'package:flutter/material.dart' show Alignment, BlendMode, BorderRadius, BoxDecoration, BoxShadow, BoxShape, BuildContext, Color, Colors, Container, EdgeInsets, LinearGradient, Offset, Padding, RadialGradient, Radius, StatelessWidget, Transform, Widget;
@@ -46,13 +44,13 @@ class ImmutableWidget extends StatelessWidget {
       The Padding widget will adjust the spacing of its child, which can be any widget of any shape or size.
       */
       child: Padding(
-        padding: EdgeInsets.all(40),
+        padding: const EdgeInsets.all(40),
         child: Transform.rotate(
           angle: 180 / Math.pi, // Rotations are supplied in radians
-          child: Container(
+          child: Container( // Container widgets can add all manner of effects to their child
             width: 250,
             height: 250,
-            decoration: BoxDecoration(
+            decoration: BoxDecoration( // BoxDecoration can draw borders, shadows, colors, gradients, images and shapes
               color: Colors.purple,
               boxShadow: [
                 BoxShadow(
