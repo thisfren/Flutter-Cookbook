@@ -7,6 +7,7 @@ States can also be marked as dirty, which is what will cause them to repaint on 
 */
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Center, Color, Colors, Column, ElevatedButton, MainAxisAlignment, MaterialStateProperty, Row, Scaffold, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
+import 'package:flutter/src/widgets/container.dart';
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
@@ -19,13 +20,14 @@ Every StatefulWidget needs a State object that will maintain its life cycle. Thi
 StatefulWidgets and their State are so tightly coupled that this is one of the few scenarios where you should keep more than one class in a single file.
 */
 class StopWatchState extends State<StopWatch> {
-  int seconds = 0;
+  int milliseconds = 0;
+  final laps = <int>[];
   late Timer timer;
   bool isTicking = false;
 
   void onTick(Timer time) {
     setState(() { // The setState function tells Flutter that a widget needs to be repainted
-      ++seconds;
+      milliseconds += 100;
     });
   }
 
@@ -56,50 +58,80 @@ class StopWatchState extends State<StopWatch> {
           'Stopwatch'
         )
       ),
-      body: Column(
+      body: _buildCounter(context)
+    );
+  }
+
+  Widget _buildCounter(BuildContext context) {
+    return Container(
+      color: Theme.of(context).primaryColor,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            '$seconds ${_secondsText()}',
-            style: Theme.of(context).textTheme.headlineMedium
+            'Lap ${laps.length + 1}',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white)
+          ),
+          Text(
+            _secondsText(),
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white)
           ),
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // MaterialStatePropery is deprecated
-                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
-                ),
-                onPressed: isTicking ? null : _startTimer,
-                child: Text('Start')
-              ),
-              SizedBox(width: 20),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
-                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white) 
-                ),
-                onPressed: isTicking ? _stopTimer : null,
-                child: Text('Stop'),
-              )
-            ]
-          )
+          _buildControls()
         ]
-      )
+      ),
     );
+  }
+
+  Widget _buildControls() {
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // MaterialStatePropery is deprecated
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
+              ),
+              onPressed: isTicking ? null : _startTimer,
+              child: Text('Start')
+            ),
+            SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: isTicking ? _lap : null,
+              child: Text('Lap')),
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white) 
+              ),
+              onPressed: isTicking ? _stopTimer : null,
+              child: Text('Stop'),
+            )
+          ]
+        );
   }
 
   /*
   Add this helper function just after the build method to make sure that our text is always grammatically correct
   */
-  String _secondsText() => seconds == 1 ? 'second' : 'seconds';
+  String _secondsText()  {
+    final seconds = milliseconds/ 1000;
+    return '$seconds seconds';
+  }
+
+  void _lap() {
+    setState(() {
+      laps.add(milliseconds);
+      milliseconds = 0;
+    });
+  }
 
   void _startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), onTick);
+    laps.clear();
+    timer = Timer.periodic(Duration(milliseconds: 100), onTick);
+
     setState(() {
-      seconds = 0;
+      milliseconds = 0;
       isTicking = true;
     });
   }

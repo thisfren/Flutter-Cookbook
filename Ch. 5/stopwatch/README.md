@@ -40,7 +40,14 @@ In this chapter, we're going to cover the following recipes:
     > #### You going are going to use two different styles of buttons – ElevatedButton and TextButton – for these different functions, but note that even though they look different, their API is the same.
     > #### Buttons in Flutter are pretty simple – they are just widgets that accept a function.
     > #### These functions are then executed when the button detects an interaction. If a null value is supplied to the onPressed property, Flutter considers the button to be disabled.
-- Making it scroll
+- ### Making it scroll
+    > #### It is very rare to encounter an app that doesn't have some sort of scrolling content.
+    > #### Scrolling, especially vertical scrolling, is one of the most natural paradigms in mobile development.
+    > #### When you have a list of elements that can extend beyond the height of a screen you'll need to use some sort of scrollable widget. 
+    > #### Scrolling content is actually rather easy to accomplish in Flutter. 
+    > #### To get started with scrolling, a great widget is ListView. Just like Columns, ListViews control a list of child widgets and place them one after another.
+    > #### However, ListViews will also make that content scroll automatically when their height is bigger than the height of their parent widget.
+    > #### In this recipe, we're going to add laps to our stopwatch app and display those laps in a scrollable list.
 - Handling large datasets with list builders
 - Working with TextFields
 - Navigating to the next screen
