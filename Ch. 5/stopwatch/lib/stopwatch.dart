@@ -6,7 +6,7 @@ The State object takes over the build responsibilities from the widget.
 States can also be marked as dirty, which is what will cause them to repaint on the next frame.
 */
 import 'dart:async' show Timer;
-import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Scaffold, State, StatefulWidget, Text, Theme, Widget;
+import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Center, Color, Colors, Column, ElevatedButton, MainAxisAlignment, MaterialStateProperty, Row, Scaffold, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
@@ -21,7 +21,15 @@ StatefulWidgets and their State are so tightly coupled that this is one of the f
 class StopWatchState extends State<StopWatch> {
   int seconds = 0;
   late Timer timer;
+  bool isTicking = false;
 
+  void onTick(Timer time) {
+    setState(() { // The setState function tells Flutter that a widget needs to be repainted
+      ++seconds;
+    });
+  }
+
+/*
   /*
   This method is used to initialize any non-final value in your state class. You can think of it as performing a job similar to a constructor.
   In our example, we used initState to kick off a Timer that fires once a second.
@@ -31,15 +39,10 @@ class StopWatchState extends State<StopWatch> {
   void initState() {
     super.initState();
 
-    void _onTick(Timer time) {
-      setState(() { // The setState function tells Flutter that a widget needs to be repainted
-        ++seconds;
-      });
-    }
-
     seconds = 0;
-    timer = Timer.periodic(Duration(seconds: 1), _onTick);
+    timer = Timer.periodic(Duration(seconds: 1), onTick);
   }
+*/
 
   /*
   The State's build method is identical to StatelessWidget's build method and is required.
@@ -53,11 +56,37 @@ class StopWatchState extends State<StopWatch> {
           'Stopwatch'
         )
       ),
-      body: Center(
-        child: Text(
-          '$seconds ${_secondsText()}',
-          style: Theme.of(context).textTheme.headlineMedium
-        )
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '$seconds ${_secondsText()}',
+            style: Theme.of(context).textTheme.headlineMedium
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // MaterialStatePropery is deprecated
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
+                ),
+                onPressed: isTicking ? null : _startTimer,
+                child: Text('Start')
+              ),
+              SizedBox(width: 20),
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white) 
+                ),
+                onPressed: isTicking ? _stopTimer : null,
+                child: Text('Stop'),
+              )
+            ]
+          )
+        ]
       )
     );
   }
@@ -66,6 +95,22 @@ class StopWatchState extends State<StopWatch> {
   Add this helper function just after the build method to make sure that our text is always grammatically correct
   */
   String _secondsText() => seconds == 1 ? 'second' : 'seconds';
+
+  void _startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), onTick);
+    setState(() {
+      seconds = 0;
+      isTicking = true;
+    });
+  }
+
+  void _stopTimer() {
+    timer.cancel();
+
+    setState(() {
+      isTicking = false;
+    });
+  }
 
   /*
   Finally, we just need to make sure the timer stops ticking when we close the screen. 
@@ -78,16 +123,3 @@ class StopWatchState extends State<StopWatch> {
     super.dispose();
   }
 }
-
-/*
-The State class has a life cycle.
-Unlike StatelessWidget, which is nothing more than a build method, StatefulWidgets have a few different life cycle methods that are called in a specific order.
-In this recipe, you used initState and dispose, but the full list of life cycle methods, in order, is as follows:
-initState
-didChangeDependencies
-didUpdateWidget
-build (required)
-reassemble
-deactivate
-dispose
-*/
