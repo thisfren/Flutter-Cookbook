@@ -8,10 +8,13 @@ This is why managing your widget trees becomes more important as your app grows.
 
 ### This chapter will cover various techniques that you can use to bring the widget tree to heel. We will explore layout techniques with columns and rows, as well as refactoring strategies that will be critical to keeping your widget tree pruned.
 
-# In this chapter, we will be covering the following recipes:
-- ## Placing widgets one after another
-- ## Proportional spacing with the Flexible and Expanded widgets
-- ## Drawing shapes with CustomPaint
+## In this chapter, we will be covering the following recipes:
+- ### Placing widgets one after another
+    >
+- ### Proportional spacing with the Flexible and Expanded widgets
+    >
+- ### Drawing shapes with CustomPaint
+    >
 - ### Nesting complex widget trees
     > #### Your effectiveness with any given platform is measured by how fast you can make changes.
     > #### Hot reload helps with this exponentially. Being able to quickly edit properties on a widget, hit Save, and almost instantly see your results without losing state is wonderful.
@@ -24,4 +27,12 @@ This is why managing your widget trees becomes more important as your app grows.
     > #### The tree only grows deeper from here. To fight the pyramid of doom, we're going to use a weapon known as refactoring. 
     > #### This is a process of taking code that is not written ideally and updating the code without changing its functionality. We can take our n-layer deep widget trees and refactor them toward something easier to read and maintain.
     > #### In this recipe, we're going to take a large and complicated widget tree and refactor it toward something cleaner.
-- ## Applying global themes
+- ### Applying global themes
+    > #### Consistency is at the heart of any good design. Every screen in your app should look as if it were designed as a single unit.
+    > #### Your font selections, color palettes, and even text padding are all part of your app's identity.
+    > #### When users look at your app, branding consistency is critical for recognition.
+    > #### Apple products look like Apple products, with their white backgrounds and sleek curves. Google's Material Design is a colorful splash of primary shapes and shadows.
+    > #### To make all their products look like they belong to the same design system, these companies use detailed documents that explicitly describe the schematics of how UIs should be designed.
+    > #### On a programmatic side, we have themes. These are widgets that live at the top of the tree and influence all of their children.
+    > #### You don't need to declare styling for every single widget. You just need to make sure that it respects the theme.
+    > #### In this recipe, we will take the e-commerce mock-up screen and simplify it even more by using themes to express the text and color styling.

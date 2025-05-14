@@ -18,83 +18,80 @@ class ECommerceScreenBefore extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple,
       appBar: _buildAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            _buildToggleBar(),
+            _buildToggleBar(context),
             Image.asset('assets/woman_shopping.jpg'),
             DealButtons(),
-            Container(
-              height: 200,
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  Image.asset(
-                    'assets/textiles.jpg',
-                    fit: BoxFit.fitHeight
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Lorem Ipsum',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(
-                            'Dolor sit amet, consectetur adipiscing elit. Quisque faucibus.'
-                          )
-                        ]
-                      )
-                    )
-                  )
-                ]
-              )
-            )
+            _buildProductTile(context)
           ]
         )
       ) 
     );
   }
 
-  Row _buildToggleBar() {
-    return Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Recommended',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold
+  Container _buildProductTile(BuildContext context) {
+    return Container(
+            height: 200,
+            color: Theme.of(context).cardColor,
+            child: Row(
+              children: <Widget>[
+                Image.asset(
+                  'assets/textiles.jpg',
+                  fit: BoxFit.fitHeight
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Lorem Ipsum',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          'Dolor sit amet, consectetur adipiscing elit. Quisque faucibus.'
+                        )
+                      ]
+                    )
                   )
                 )
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Casual Wear',
-                  style: TextStyle(
-                    color: Colors.white54,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold
-                  )
-                )
-              )
-            ]
+              ]
+            )
           );
+  }
+
+  Row _buildToggleBar(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        _buildToggleItem(context, 'Recommended', selected: true),
+        _buildToggleItem(context, 'Casual Wear'),
+        _buildToggleItem(context, 'Formal Wear')
+      ]
+    );
+  }
+
+  Padding _buildToggleItem(BuildContext context, String text, {bool selected = false}) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: selected ? null : Theme.of(context).textTheme.titleMedium?.color?.withOpacity(0.5),
+          fontSize: 17,
+          fontWeight: selected ? FontWeight.bold : null
+        )
+      )
+    );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.purpleAccent,
       shape:RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))
       ),
@@ -103,7 +100,6 @@ class ECommerceScreenBefore extends StatelessWidget{
         child: Icon(Icons.home)
       ),
       title: Text("Let's go shopping!"),
-      elevation: 0,
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.all(20),
