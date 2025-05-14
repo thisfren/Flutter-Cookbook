@@ -1,7 +1,9 @@
 // lib/main.dart
 import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+import 'package:mastering_layout/e_commerce_screen_before.dart' show ECommerceScreenBefore;
+// import 'package:mastering_layout/deep_tree.dart' show DeepTree;
 // import 'package:mastering_layout/flex_screen.dart';
-import 'package:mastering_layout/profile_screen.dart' show ProfileScreen;
+// import 'package:mastering_layout/profile_screen.dart' show ProfileScreen;
 
 
 
@@ -16,8 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProfileScreen(),
+      // home: ProfileScreen()
       // home: FlexScreen()
+      // home: DeepTree()
+      home: ECommerceScreenBefore()
     );
   }
 }

@@ -12,6 +12,16 @@ This is why managing your widget trees becomes more important as your app grows.
 - ## Placing widgets one after another
 - ## Proportional spacing with the Flexible and Expanded widgets
 - ## Drawing shapes with CustomPaint
-- ## Nesting complex widget trees
-- ## Refactoring widget trees to improve legibility
+- ### Nesting complex widget trees
+    > #### Your effectiveness with any given platform is measured by how fast you can make changes.
+    > #### Hot reload helps with this exponentially. Being able to quickly edit properties on a widget, hit Save, and almost instantly see your results without losing state is wonderful.
+    > #### This feature enables you to experiment. It also allows you to make mistakes and quickly undo them without wasting precious compile time.
+- ### Refactoring widget trees to improve legibility
+    > #### There is a delightfully sardonic anti-pattern in coding known as the pyramid of doom. 
+    > #### This pattern describes code that is excessively nested (such as 10+ nested if statements and control flow loops).
+    > #### You end up getting code that, when you look at it from a distance, resembles a pyramid. Pyramid-like code is highly bug-prone. It is hard to read and, more importantly, hard to maintain.
+    > #### Widget trees are not immune to this deadly pyramid. In this chapter, we've tried to keep our widget trees fairly shallow, but none of the examples so far is really indicative of production code—they are simplified scenarios to explain the fundamentals of Flutter.
+    > #### The tree only grows deeper from here. To fight the pyramid of doom, we're going to use a weapon known as refactoring. 
+    > #### This is a process of taking code that is not written ideally and updating the code without changing its functionality. We can take our n-layer deep widget trees and refactor them toward something easier to read and maintain.
+    > #### In this recipe, we're going to take a large and complicated widget tree and refactor it toward something cleaner.
 - ## Applying global themes
