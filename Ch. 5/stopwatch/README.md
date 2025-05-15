@@ -77,4 +77,24 @@ In this chapter, we're going to cover the following recipes:
     > #### In Flutter, you can use named routes. This means you can assign a textual name to your screens and simply invoke them as if you were just going to another page on a website.
     > #### In this recipe, you are going to update the existing routing mechanism in the stopwatch project so that you can use named routes instead.
 - Showing dialogs on the screen
+    > #### Dialogs, or popups, are used when you want to give a message to your users that needs their attention.
+    > #### This ranges from telling the user about some error that occurred or asking them to perform some action before continuing, or even giving them a warning.
+    > #### As alerts require some feedback from the user, you should use them for important information prompts or for actions that require immediate attention: in other words, only when necessary.
+    > #### In this recipe, we're going to create a platform-aware alert and use it to show a prompt when the user stops the stopwatch.
+    > #### The way Flutter handles dialogs is fascinating in terms of its simplicity. Dialogs are just routes.
+    > #### The only difference between a MaterialPageRoute and a Dialog is the animation that Flutter uses to display them. Since dialogs are just routes, they use the same Navigator API for pushing and popping.
+    > #### This is accomplished by calling the showDialog or showCupertinoDialog global function.
+    > #### Both of these functions will look for the app's Navigator and push a route onto the navigation stack using the platform-appropriate animation.
+    
+    > #### An alert, whether Material or Cupertino, is made up of three components:
+    > #### Title
+    > #### Content
+    > #### Actions
+    
+    > #### The title and content properties are just widgets. Typically, you would use a Text widget, but that's not required.
+    > #### If you want to put an input form and a scrolling list in a Center widget, you could certainly do that.
+    > #### The actions are also usually a list of buttons, where users can perform an appropriate action.
+    > #### Note that closing the dialog is just a standard call to the Navigator API. Since dialogs are routes, we can treat them identically. 
+    > #### On Android, the system's back button will even pop the dialog from the stack, just as you would expect.
 - Presenting bottom sheets
+

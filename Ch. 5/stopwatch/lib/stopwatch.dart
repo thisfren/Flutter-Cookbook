@@ -7,6 +7,7 @@ States can also be marked as dirty, which is what will cause them to repaint on 
 */
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, ModalRoute, Row, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
+import 'package:stopwatch/platform_alert.dart' show PlatformAlert;
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
@@ -235,6 +236,13 @@ class StopWatchState extends State<StopWatch> {
     setState(() {
       isTicking = false;
     });
+
+    final totalRuntime = laps.fold(milliseconds, (total, lap) => total + lap);
+    final alert = PlatformAlert(
+      title: 'Run Completed!',
+      message: 'Total Run Time is: ${_secondsText(totalRuntime)}.'
+    );
+    alert.show(context);
   }
 
   /*
