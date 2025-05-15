@@ -16,7 +16,8 @@ Their job isn't to render anything on the screen, but to pass data down to lower
 Just like any other widget in Flutter, InheritedWidgets can also have child widgets.
 */
 class PlanProvider extends InheritedWidget {
-  final plan = Plan(); // First, we define an object that will store the plans
+  // final plan = Plan(); // First, we define an object that will store the plans
+  final plans = <Plan>[]; // Update the PlanProvider class so that it can handle multiple plans
 
   /*
   Then, we define a default unnamed constructor, which takes in a key and a child, and passes them to the superclass (super).
@@ -39,7 +40,7 @@ class PlanProvider extends InheritedWidget {
   /*
   To make the data accessible from anywhere in the app, we need to create our first of-context method.
   */
-  static Plan? of(BuildContext context) {
+  static List<Plan>? of(BuildContext context) {
     /*
     Here, you are using the context's dependOnInheritedWidgetOfExactType method to kick off the tree traversal process.
     Flutter will start from the widget that owns this context and travel upward until it finds a PlanProvider.
@@ -50,6 +51,6 @@ class PlanProvider extends InheritedWidget {
     */
     final provider = 
       context.dependOnInheritedWidgetOfExactType<PlanProvider>();
-    return provider?.plan;
+    return provider?.plans;
   }
 }

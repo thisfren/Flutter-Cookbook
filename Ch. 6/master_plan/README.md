@@ -39,6 +39,10 @@ Users will be able to add, edit, delete, and complete their tasks.
     > #### InheritedWidget can be used as the doorway between your view and data layers.
     > #### In this recipe, we will be updating the Master Plan app to move the storage of the to-do lists outside of the view classes.
 - ### Making the app state visible across multiple screens
+    > #### One phrase that is thrown around a lot in the Flutter community is "Lift State Up." 
+    > #### This mantra, which originally came from React, refers to the idea that State objects should be placed higher than the widgets that need it in the widget tree.
+    > #### Our InheritedWidget, which we created in the previous recipe, works perfectly for a single screen, but it is not ideal when you add a second. The higher in the tree your state object is stored, the easier it is for your children widgets to access it.
+    > #### In this recipe, you are going to add another screen to the Master Plan app so that you can create multiple plans. Accomplishing this will require our State provider to be lifted higher in the tree, closer to its root.
 - ### Designing an n-tier architecture, part 1 – controllers
 - ### Designing an n-tier architecture, part 2 – repositories
 - ### Designing an n-tier architecture, part 3 – services
