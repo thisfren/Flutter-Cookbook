@@ -58,6 +58,10 @@ In this chapter, we're going to cover the following recipes:
     > #### This trick has existed since the beginning of mobile development and is no different today.
     > #### In this recipe, we're going to optimize the stopwatch app from the previous recipe to employ recycling when our dataset grows beyond what our phones can handle.
 - Working with TextFields
+    > #### Together with buttons, another extremely common form of user interaction is the text field.
+    > #### There comes a point in most apps where your users will need to type something; for example, a formwhere users need to type in their username and password.
+    > #### Because the text is often related to the concept of forms, Flutter also has a subclass of TextField called TextFormField, which adds functionality for multiple text fields to work together.
+    > #### In this recipe, we're going to create a login form for our stopwatch app so that we know which runner we're timing.
 - Navigating to the next screen
 - Invoking navigation routes by name
 - Showing dialogs on the screen

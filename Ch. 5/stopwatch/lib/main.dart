@@ -5,6 +5,7 @@
  */
 
 import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+import 'package:stopwatch/login_screen.dart' show LoginScreen;
 import 'package:stopwatch/stopwatch.dart' show StopWatch;
 
 
@@ -15,7 +16,8 @@ class StopwatchApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StopWatch()
+      // home: StopWatch()
+      home: LoginScreen()
     );
   }
 }
