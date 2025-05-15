@@ -4,6 +4,8 @@ import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Colors
 import 'package:stopwatch/stopwatch.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const route = '/login';
+
   const LoginScreen({super.key});
 
   @override
@@ -123,6 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final name = _nameController.text;
     final email = _emailController.text;
 
+    Navigator.of(context).pushReplacementNamed(
+      StopWatch.route,
+      arguments: name,
+    );
+
+  /*
     /*
     Internally, Navigators function as a stack. Routes can be pushed onto the stack and popped off the stack.
     Normally, you would just use the standard push() and pop() methods to add and remove routes, but as we discussed in this recipe, we didn't just want to push StopWatch onto the screen – we also wanted to pop LoginScreen from the stack at the same time. To accomplish this, we used the pushReplacement method.
@@ -141,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
       */
       MaterialPageRoute(builder: (_) => StopWatch(name: name, email: email))
     );
+  */
   }
 
 }

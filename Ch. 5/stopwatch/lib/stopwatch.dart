@@ -6,10 +6,11 @@ The State object takes over the build responsibilities from the widget.
 States can also be marked as dirty, which is what will cause them to repaint on the next frame.
 */
 import 'dart:async' show Timer;
-import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, Row, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
+import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, ModalRoute, Row, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
+  static const route = '/stopwatch';
   /*
   The constructor for the StopWatch widget needs to be updated so that it can accept the name and email.
   */
@@ -18,8 +19,8 @@ class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two
 
   const StopWatch({
     super.key,
-    required this.name,
-    required this.email
+    this.name = "",
+    this.email = ""
   });
 
   @override
@@ -31,6 +32,7 @@ Every StatefulWidget needs a State object that will maintain its life cycle. Thi
 StatefulWidgets and their State are so tightly coupled that this is one of the few scenarios where you should keep more than one class in a single file.
 */
 class StopWatchState extends State<StopWatch> {
+
   int milliseconds = 0;
   final laps = <int>[];
   late Timer timer;
@@ -66,10 +68,22 @@ class StopWatchState extends State<StopWatch> {
   */
   @override
   Widget build(BuildContext context) {
+    /*
+    Passing data between named routes also requires a bit more thought.
+    You cannot use any custom constructor because WidgetBuilder is already defined and locked in MaterialApp.
+    Instead, you can use arguments to add anything you want to pass to the next screen.
+    If you take a look at the definition of the pushNamed function, you'll see that the type for arguments is simply Object.
+    This code is not safe in itself.
+    There is no guarantee that the value that was passed into the arguments is a string or even exists at all.
+    Passing arguments through named routes requires some effort, especially if you want to do so safely.
+    For these reasons, it's recommended that you use manually constructed routes when you need to pass data back and forth between your screens.
+    */
+    String name = ModalRoute.of(context)?.settings.arguments.toString() ?? "";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.name
+          name
         )
       ),
       body: Column(

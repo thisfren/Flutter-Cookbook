@@ -73,5 +73,8 @@ In this chapter, we're going to cover the following recipes:
     > #### In this recipe, we're going to link LoginScreen and StopWatch so that
     > #### LoginScreen actually logs you in.
 - Invoking navigation routes by name
+    > #### Routing is a concept that is so engrained into the internet that we almost don't think about it anymore.
+    > #### In Flutter, you can use named routes. This means you can assign a textual name to your screens and simply invoke them as if you were just going to another page on a website.
+    > #### In this recipe, you are going to update the existing routing mechanism in the stopwatch project so that you can use named routes instead.
 - Showing dialogs on the screen
 - Presenting bottom sheets
