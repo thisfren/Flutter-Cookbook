@@ -10,6 +10,18 @@ import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, C
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
+  /*
+  The constructor for the StopWatch widget needs to be updated so that it can accept the name and email.
+  */
+  final String name;
+  final String email;
+
+  const StopWatch({
+    super.key,
+    required this.name,
+    required this.email
+  });
+
   @override
   State createState() => StopWatchState();
 }
@@ -57,7 +69,7 @@ class StopWatchState extends State<StopWatch> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Stopwatch'
+          widget.name
         )
       ),
       body: Column(

@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
 import 'package:stopwatch/login_screen.dart' show LoginScreen;
-import 'package:stopwatch/stopwatch.dart' show StopWatch;
+// import 'package:stopwatch/stopwatch.dart' show StopWatch;
 
 
 void main() => runApp(StopwatchApp());

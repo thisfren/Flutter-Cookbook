@@ -63,6 +63,15 @@ In this chapter, we're going to cover the following recipes:
     > #### Because the text is often related to the concept of forms, Flutter also has a subclass of TextField called TextFormField, which adds functionality for multiple text fields to work together.
     > #### In this recipe, we're going to create a login form for our stopwatch app so that we know which runner we're timing.
 - Navigating to the next screen
+    > #### So far, all our examples have taken place on a single screen. In most real-world projects,
+    > #### you might be managing several screens, each with their own paths that can be pushed and
+    > #### popped onto the screen.
+    > #### Flutter, and more specifically MaterialApp, uses a class called Navigator to manage your
+    > #### app's screens. Screens are abstracted into a concept called Routes, which contain both the
+    > #### widget we want to show and how we want to animate them on the screen. Navigator also
+    > #### keeps a full history of your routes so that you can return to the previous screens easily.
+    > #### In this recipe, we're going to link LoginScreen and StopWatch so that
+    > #### LoginScreen actually logs you in.
 - Invoking navigation routes by name
 - Showing dialogs on the screen
 - Presenting bottom sheets

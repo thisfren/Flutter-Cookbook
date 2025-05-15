@@ -1,6 +1,7 @@
 // lib/login_screen.dart
 
-import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Colors, Column, EdgeInsets, ElevatedButton, Form, FormState, GlobalKey, Icon, Icons, InputDecoration, MainAxisAlignment, Padding, Scaffold, SizedBox, State, StatefulWidget, Text, TextEditingController, TextFormField, TextInputType, Widget;
+import 'package:flutter/material.dart' show AppBar, BuildContext, Center, Colors, Column, EdgeInsets, ElevatedButton, Form, FormState, GlobalKey, Icon, Icons, InputDecoration, MainAxisAlignment, MaterialPageRoute, Navigator, Padding, Scaffold, SizedBox, State, StatefulWidget, Text, TextEditingController, TextFormField, TextInputType, Widget;
+import 'package:stopwatch/stopwatch.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool loggedIn = false;
+  // bool loggedIn = false;
   late String name;
 
   /*
@@ -36,7 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('Login'),
       ),
       body: Center(
-        child: loggedIn ? _buildSuccess() : _buildLoginForm()
+        // child: loggedIn ? _buildSuccess() : _buildLoginForm()
+        child: _buildLoginForm()
       )
     );
   }
@@ -93,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+/*
   Widget _buildSuccess() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ]
     );
   }
-
+*/
   void _validate() {
     final form = _formKey.currentState;
 
@@ -110,9 +113,34 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
+  /*
     setState(() {
       loggedIn = true;
       name = _nameController.text;
     });
+  */
+
+    final name = _nameController.text;
+    final email = _emailController.text;
+
+    /*
+    Internally, Navigators function as a stack. Routes can be pushed onto the stack and popped off the stack.
+    Normally, you would just use the standard push() and pop() methods to add and remove routes, but as we discussed in this recipe, we didn't just want to push StopWatch onto the screen – we also wanted to pop LoginScreen from the stack at the same time. To accomplish this, we used the pushReplacement method.
+    */
+    Navigator.of(context).pushReplacement (
+      /*
+      We also used the MaterialPageRoute class to represent our routes. 
+      This object will create a platform-aware transition between the two screens.
+      On iOS, it will push onto the screen from right, while on Android, it will pop onto the screen from the bottom.
+
+      Similar to ListView.builder, MaterialPageRoute also expects a WidgetBuilder instead of direct child.
+      WidgetBuilder is a function that provides a BuildContext and expects a Widget to be returned:
+      builder: (_) => StopWatch(name: name, email: email)
+      This allows Flutter to delay the construction of the widget until it's needed.
+      We also didn't need the context property, so it was replaced with an underscore.
+      */
+      MaterialPageRoute(builder: (_) => StopWatch(name: name, email: email))
+    );
   }
+
 }
