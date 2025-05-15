@@ -49,6 +49,14 @@ In this chapter, we're going to cover the following recipes:
     > #### However, ListViews will also make that content scroll automatically when their height is bigger than the height of their parent widget.
     > #### In this recipe, we're going to add laps to our stopwatch app and display those laps in a scrollable list.
 - Handling large datasets with list builders
+    > #### There is an interesting trick that mobile apps use when they need to render lists of data that can potentially contain more entries than your device has memory to display. 
+    > #### This was especially critical in the early days of mobile app development, when phones were a lot less powerful than they are today.
+    > #### Imagine that you had to create a contacts app, where your user could potentially have hundreds and hundreds of scrollable contacts. If you put them all in a single ListView and asked Flutter to create all of these widgets, there would be a point where your app could run out of memory, slow down, and even potentially crash.
+    > #### Take a look at the contacts app on your phone and scroll up and down really fast. These apps don't show any delay while scrolling, and they certainly aren't in any danger of crashing because of the amount of data.
+    > #### What's the secret? If you look carefully at your app, you'll see that only so many items can fit on the screen at once, regardless of how many entries there are in your list.
+    > #### So, some smart engineers figured out they can recycle these views. When a widget moves off screen, why not reuse it with the new data?
+    > #### This trick has existed since the beginning of mobile development and is no different today.
+    > #### In this recipe, we're going to optimize the stopwatch app from the previous recipe to employ recycling when our dataset grows beyond what our phones can handle.
 - Working with TextFields
 - Navigating to the next screen
 - Invoking navigation routes by name

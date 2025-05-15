@@ -6,8 +6,7 @@ The State object takes over the build responsibilities from the widget.
 States can also be marked as dirty, which is what will cause them to repaint on the next frame.
 */
 import 'dart:async' show Timer;
-import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Center, Color, Colors, Column, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, Row, Scaffold, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
-import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, Row, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
 
 
 class StopWatch extends StatefulWidget { // A StatefulWidget is divided into two classes –the widget and its state
@@ -24,6 +23,9 @@ class StopWatchState extends State<StopWatch> {
   final laps = <int>[];
   late Timer timer;
   bool isTicking = false;
+
+  final itemHeight = 60.0;
+  final scrollController = ScrollController();
 
   void onTick(Timer time) {
     setState(() { // The setState function tells Flutter that a widget needs to be repainted
@@ -138,20 +140,56 @@ class StopWatchState extends State<StopWatch> {
       laps.add(milliseconds);
       milliseconds = 0;
     });
+
+    /*
+    ScrollController is a special object that allows to key into ListView from outside the build methods.
+    This is a frequently used pattern in Flutter where you can optionally provide a controller object that has methods to manipulate its widget.
+    */
+    scrollController.animateTo(
+      itemHeight * laps.length, // The first property of this function wants to know where in ListView to scroll
+      duration: Duration(milliseconds : 500), // The second property dictates the length of the animation
+      curve: Curves.easeIn // The final property tells the animation to slow down as it reaches its destination
+    );
   }
 
-  /*
-  We're using a type of scrolling widget called ListView, which is probably one of the simplest types of scrolling widgets in Flutter.
-  This widget functions a bit like a column, except instead of throwing errors when it runs out of space, ListView will enable scrolling, allowing you to use drag gestures to scroll through all the data.
-  */
   Widget _buildLapDisplay() {
+    /*
+    We're using a type of scrolling widget called ListView, which is probably one of the simplest types of scrolling widgets in Flutter.
+    This widget functions a bit like a column, except instead of throwing errors when it runs out of space, ListView will enable scrolling, allowing you to use drag gestures to scroll through all the data.
     return ListView(
       children: [
         for (int milliseconds in laps)
           ListTile(
-            title: Text(_secondsText(milliseconds))
+            title: Text(_secondsText(milliseconds)),
           )
-      ]
+      ],
+    );
+    */
+    return Scrollbar(  
+      child: ListView.builder(
+        controller: scrollController,
+        itemExtent: itemHeight, // The itemExtent property is a way to supply a fixed height to all the items in ListView
+        /*
+        To build an optimized ListView with its builder constructor, you need to tell Flutter how large the list is via the itemCount property.
+        If you don't include it, Flutter will think that the list is infinitely long and it will never terminate.
+        There may be a few cases where you want to use an infinite list, but they are rare.In most cases, you need to tell Flutter how long the list is; otherwise, you will get an "out of bounds" error.
+        */
+        itemCount: laps.length,
+        /*
+        itemBuilder enables deferred rendering.
+        We are no longer providing Flutter with a list of widgets. Instead, we are waiting for Flutter to use what it needs and only creating widgets for a subset of our list.
+        As the user scrolls, Flutter will continuously call the itemBuilder function with the appropriate index.
+        When widgets move off the screen, Flutter can remove them from the tree, freeing up precious memory.
+        */
+        itemBuilder: (context, index) {
+          final milliseconds = laps[index];
+          return ListTile(
+            contentPadding: EdgeInsets.symmetric(horizontal: 50),
+            title: Text('Lap ${index + 1}'),
+            trailing: Text(_secondsText(milliseconds))
+          );
+        }
+      ),
     );
   }
 
