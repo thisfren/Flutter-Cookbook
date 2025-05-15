@@ -6,7 +6,8 @@ The State object takes over the build responsibilities from the widget.
 States can also be marked as dirty, which is what will cause them to repaint on the next frame.
 */
 import 'dart:async' show Timer;
-import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, ModalRoute, Row, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty;
+import 'package:flutter/material.dart' show AppBar, BuildContext, ButtonStyle, Color, Colors, Column, Container, Curves, EdgeInsets, ElevatedButton, Expanded, ListTile, ListView, MainAxisAlignment, MainAxisSize, ModalRoute, Padding, Row, SafeArea, Scaffold, ScrollController, Scrollbar, SizedBox, State, StatefulWidget, Text, TextButton, Theme, Widget, WidgetStateProperty, showBottomSheet;
+import 'package:flutter/src/widgets/basic.dart';
 import 'package:stopwatch/platform_alert.dart' show PlatformAlert;
 
 
@@ -126,32 +127,39 @@ class StopWatchState extends State<StopWatch> {
 
   Widget _buildControls() {
     return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // MaterialStatePropery is deprecated
-                foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
-              ),
-              onPressed: isTicking ? null : _startTimer,
-              child: Text('Start')
-            ),
-            SizedBox(width: 20),
-            ElevatedButton(
-              onPressed: isTicking ? _lap : null,
-              child: Text('Lap')
-            ),
-            SizedBox(width: 20),
-            TextButton(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // MaterialStatePropery is deprecated
+            foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
+          ),
+          onPressed: isTicking ? null : _startTimer,
+          child: Text('Start')
+        ),
+        SizedBox(width: 20),
+        ElevatedButton(
+          onPressed: isTicking ? _lap : null,
+          child: Text('Lap')
+        ),
+        SizedBox(width: 20),
+        /*
+        Builder is a widget that doesn't have a child or children, but a WidgetBuilder, just like routes and bottom sheets.
+        By wrapping the button into a builder, we can grab a different BuildContext, one that is certainly a child of Scaffold, and use that to successfully show the bottom sheet.
+        */
+        Builder(
+          builder: (context) 
+          => TextButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
                 foregroundColor: WidgetStateProperty.all<Color>(Colors.white)
               ),
-              onPressed: isTicking ? _stopTimer : null,
+              onPressed: isTicking ? () => _stopTimer(context) : null,
               child: Text('Stop'),
             )
-          ]
-        );
+        )
+      ]
+    );
   }
 
   /*
@@ -230,19 +238,52 @@ class StopWatchState extends State<StopWatch> {
     });
   }
 
-  void _stopTimer() {
+  void _stopTimer(BuildContext context) {
     timer.cancel();
 
     setState(() {
       isTicking = false;
     });
 
+    /*
+    Bottom sheets are a little different than Dialogs in that they are not full routes.
+    For a bottom sheet to be presented, it attaches itself to the closest Scaffold in the tree using the same of-context pattern to find it.
+    */
+    final controller = showBottomSheet(context: context, builder: _buildRunCompleteSheet);
+  /*
     final totalRuntime = laps.fold(milliseconds, (total, lap) => total + lap);
     final alert = PlatformAlert(
       title: 'Run Completed!',
       message: 'Total Run Time is: ${_secondsText(totalRuntime)}.'
     );
     alert.show(context);
+  */
+
+    Future.delayed(Duration(seconds: 5)).then((_) {
+      controller.close();
+    });
+  }
+
+  Widget _buildRunCompleteSheet(BuildContext context) {
+    final totalRuntime = laps.fold(milliseconds, (total, lap) => total + lap);
+    final textTheme = Theme.of(context).textTheme;
+
+    return SafeArea(
+      child: Container(
+        color: Theme.of(context).cardColor,
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 30),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Run Finished!', style: textTheme.headlineSmall),
+              Text('Total Run Time is: ${_secondsText(totalRuntime)}')
+            ]
+          )
+        )
+      )
+    );
   }
 
   /*

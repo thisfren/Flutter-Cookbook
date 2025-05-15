@@ -97,4 +97,7 @@ In this chapter, we're going to cover the following recipes:
     > #### Note that closing the dialog is just a standard call to the Navigator API. Since dialogs are routes, we can treat them identically. 
     > #### On Android, the system's back button will even pop the dialog from the stack, just as you would expect.
 - Presenting bottom sheets
-
+    > #### There are times where you need to present modal information, but a dialog just comes on too strong.
+    > #### Fortunately, there are quite a few alternative conventions for putting information on the screen that do not necessarily require action from users.
+    > #### Bottom sheets are one of the "gentler" alternatives to dialogs. With a bottom sheet, information slides out from the bottom ofthe screen, where it can be swiped down by the user if it displeases them. Also, unlike alerts, bottom sheets do not block the main interface, allowing the user to conveniently ignore this optional modal.
+    > #### In this final recipe for the stopwatch app, we're going to replace the dialog alert with a bottom sheet and animate it away after 5 seconds.
