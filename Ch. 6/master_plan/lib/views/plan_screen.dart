@@ -1,6 +1,8 @@
 // lib/views/plan_screen.dart
 
-import 'package:flutter/material.dart' show AppBar, BuildContext, Checkbox, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, Scaffold, ScrollController, State, StatefulWidget, Text, TextField, Widget;
+import 'package:flutter/material.dart' show AppBar, BuildContext, Checkbox, Expanded, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, SafeArea, Scaffold, ScrollController, State, StatefulWidget, Text, TextField, TextFormField, Widget;
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:master_plan/plan_provider.dart' show PlanProvider;
 
 import '../models/data_layer.dart';
 
@@ -11,7 +13,7 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> {
-  final plan = Plan();
+  // final plan = Plan();
   late ScrollController scrollController;
 
   @override
@@ -25,18 +27,31 @@ class _PlanScreenState extends State<PlanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final plan = PlanProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Master Plan')),
-      body: _buildList(),
+      body: Column(
+        children: [
+          Expanded(
+            child :_buildList()
+          ),
+          SafeArea(
+            child: Text(plan!.completenessMessage)
+          )
+        ],
+      ),
       floatingActionButton: _buildAddTaskButton()
     );
   }
 
   Widget _buildAddTaskButton() {
+    final plan = PlanProvider.of(context);
+
     return FloatingActionButton(
       onPressed: () {
         setState(() {
-          plan.tasks.add(Task());
+          plan!.tasks.add(Task());
         });
       },
       child: Icon(Icons.add)
@@ -44,9 +59,11 @@ class _PlanScreenState extends State<PlanScreen> {
   }
 
   Widget _buildList() {
+    final plan = PlanProvider.of(context);
+
     return ListView.builder( // The ListView widget (the view) queries the Plan class (the model) to figure out how many items there are
       controller: scrollController,
-      itemCount: plan.tasks.length,
+      itemCount: plan!.tasks.length,
       /*
       In the itemBuilder closure, we extract the specific Task that matches the item index and pass the entire model to the buildTaskTile method.
       */
@@ -69,6 +86,15 @@ class _PlanScreenState extends State<PlanScreen> {
           });
         }
       ),
+      title: TextFormField(
+        initialValue: task.description,
+        onFieldSubmitted: (text) {
+          setState(() {
+            task.description = text;
+          });
+        }
+      )
+    /*
       title: TextField(
         onChanged: (text) {
           setState(() {
@@ -76,6 +102,7 @@ class _PlanScreenState extends State<PlanScreen> {
           });
         }
       )
+    */
     );
   }
 

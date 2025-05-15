@@ -26,6 +26,18 @@ Users will be able to add, edit, delete, and complete their tasks.
     > #### In this recipe, we're going to build the start of our Todo app and create a model graph to go along with our views.
     > #### The best place to start is the data layer. This will give you a clear view of your app, without going into the details of your user interface.
 - ### Managing the data layer with InheritedWidget
+    > #### How should you call the data classes in your app?
+    > #### You could, in theory, set up a place in static memory where all your data classes will reside, but that won't play well with tools such as Hot Reload and could even introduce some undefined behavior down the road.
+    > #### The better options involve placing your data classes in the widget tree so they can take advantage of your application's life cycle.
+    > #### The question then becomes, how can you place a model in the widget tree?
+    > #### Models are not widgets, after all, and there is nothing to build onto the screen.
+
+    > #### A possible solution is using InheritedWidget. 
+    > #### So far, we've only been using two types of widgets: StatelessWidget and StatefulWidget.
+    > #### Both of these widgets are concerned with rendering widgets onto the screen; the only difference is that one can change and the other cannot.
+    > #### InheritedWidget is another beast entirely. Its job is to pass data down to its children, but from a user's perspective, it's invisible. 
+    > #### InheritedWidget can be used as the doorway between your view and data layers.
+    > #### In this recipe, we will be updating the Master Plan app to move the storage of the to-do lists outside of the view classes.
 - ### Making the app state visible across multiple screens
 - ### Designing an n-tier architecture, part 1 – controllers
 - ### Designing an n-tier architecture, part 2 – repositories

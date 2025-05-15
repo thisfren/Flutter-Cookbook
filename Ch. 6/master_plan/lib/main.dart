@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart' show BuildContext, ColorScheme, Colors, MaterialApp, StatelessWidget, ThemeData, Widget, runApp;
 
+import 'package:master_plan/plan_provider.dart';
 import './views/plan_screen.dart';
 
 
@@ -15,7 +16,8 @@ class MasterPlanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple), useMaterial3: true),
-      home: PlanScreen()
+      // home: PlanScreen()
+      home: PlanProvider(child: PlanScreen())
     );
   }
 }
