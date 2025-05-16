@@ -65,3 +65,7 @@ Users will be able to add, edit, delete, and complete their tasks.
     > #### Remember, the whole goal of an n-tier architecture is to strictly separate responsibilities; we let repositories do what they do best – store data – and let the higher layers handle the rest.
     > #### The higher layers in the n-tier architecture do not need to know how the data is stored, just that it is stored. Everything else, from their perspective, is an implementation detail.
 - ### Designing an n-tier architecture, part 3 – services
+    > #### The final tier that we will be talking about in this exploration of the n-tier architecture is the services tier.
+    > #### This tier serves as the glue between the controllers and repositories. 
+    > #### Its primary job is to transform the data from the generic format used by the storage solution into the actual schema that is used by the controllers and the user interface.
+    > #### In this recipe, we will be creating serialization and deserialization functions for our models, as well as stitching it all together with a services class.

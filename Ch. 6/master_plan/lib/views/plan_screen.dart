@@ -1,7 +1,6 @@
 // lib/views/plan_screen.dart
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show AppBar, BuildContext, Checkbox, Colors, Column, Expanded, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, SafeArea, Scaffold, ScrollController, State, StatefulWidget, Text, TextFormField, Widget;
+import 'package:flutter/material.dart' show PopScope, AppBar, BuildContext, Checkbox, Colors, Column, Container, DismissDirection, Dismissible, Expanded, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, SafeArea, Scaffold, ScrollController, State, StatefulWidget, Text, TextFormField, ValueKey, Widget;
 import 'package:master_plan/plan_provider.dart';
 // import 'package:master_plan/plan_provider.dart' show PlanProvider;
 
@@ -38,20 +37,35 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget build(BuildContext context) {
     // final plan = PlanProvider.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text('Master Plan')),
-      body: Column(
-        children: [
-          Expanded(
-            child :_buildList()
-          ),
-          SafeArea(
-            // child: Text(plan!.completenessMessage)
-            child: Text(plan.completenessMessage)
-          )
-        ],
+    /*
+    When a user dismisses a PlanScreen, the data should be synchronized with our storage solution.
+    Flutter has a widget called WillPopScope that allows you to run arbitrary code when routes are dismissed.
+    */
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (bool didPop) { // Correct parameter name and callback signature
+        // This callback is invoked after the pop attempt.
+        // didPop will be true if the pop is proceeding.
+        if (didPop) {
+          final controller = PlanProvider.of(context);
+          controller.savePlan(plan);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text('Master Plan')),
+        body: Column(
+          children: [
+            Expanded(
+              child :_buildList()
+            ),
+            SafeArea(
+              // child: Text(plan!.completenessMessage)
+              child: Text(plan.completenessMessage)
+            )
+          ],
+        ),
+        floatingActionButton: _buildAddTaskButton()
       ),
-      floatingActionButton: _buildAddTaskButton()
     );
   }
 

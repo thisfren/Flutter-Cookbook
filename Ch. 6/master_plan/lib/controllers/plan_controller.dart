@@ -4,12 +4,14 @@
  */
 
 import '../models/data_layer.dart';
+import '../services/plan_services.dart';
 
 
 class PlanController {
-  final _plans = <Plan>[];
+  final services = PlanServices(); // Remove the controller's private _plans property and replace it with the service
+  // final _plans = <Plan>[];
 
-  List<Plan> get plans => List.unmodifiable(_plans); // This public getter cannot be modified by any other object
+  List<Plan> get plans => List.unmodifiable(services.getAllPlans()); // This public getter cannot be modified by any other object
 
   /*
   We can use our business logic to check the naming input for new plans.
@@ -19,17 +21,25 @@ class PlanController {
       return;
     }
 
-    name = _checkForDuplicates(_plans.map((plan) => plan.name), name);
+    name = _checkForDuplicates(plans.map((plan) => plan.name), name);
 
+    services.createPlan(name);
+    /*
     final plan = Plan()..name = name;
     _plans.add(plan);
+    */
   }
 
   /*
-  Also add the method for deleting a plan.
+  Also add the methods for saving and deleting a plan.
   */
+  void savePlan(Plan plan) {
+    services.savePlan(plan);
+  }
+
   void deletePlan(Plan plan) {
-    _plans.remove(plan);
+    services.delete(plan);
+    //_plans.remove(plan);
   }
 
   /*
@@ -42,12 +52,16 @@ class PlanController {
 
     description = _checkForDuplicates(plan.tasks.map((task) => task.description), description);
 
+    services.addTask(plan, description);
+    /*
     final task = Task()..description = description;
     plan.tasks.add(task);
+    */
   }
 
   void deleteTask(Plan plan, Task task) {
-    plan.tasks.remove(task);
+    services.deleteTask(plan, task);
+    // plan.tasks.remove(task);
   }
 
   /*
