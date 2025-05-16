@@ -57,4 +57,11 @@ Users will be able to add, edit, delete, and complete their tasks.
     > #### In this recipe, we'll be moving the business logic for the Master Plan app from the view to a new controller class. We will also be adding the ability to delete notes from the list.
 
 - ### Designing an n-tier architecture, part 2 – repositories
+    > #### The next stage of the n-tier architecture we are going to discuss in this recipe is the bottom- most layer: the repositories, or the data layer.
+    > #### The purpose of a repository is to store and retrieve data. This layer can be implemented as a database, web service, or in the case of the Master Plan project, a simple in-memory cache.
+    > #### Unlike the controller layer, which is business logic-aware, the repository layer is only concerned with getting and storing data in its most abstract form. These classes should not even know about the model files that we created earlier.
+    > #### The reason why repositories are so purposefully ignorant is to keep them focused entirely on their task – persistence.
+    > #### Communicating with a database or a web service can become complicated if you have many small requirements. These concerns are typically beneath business logic and are easier to resolve when you're only focused on abstract objects.
+    > #### Remember, the whole goal of an n-tier architecture is to strictly separate responsibilities; we let repositories do what they do best – store data – and let the higher layers handle the rest.
+    > #### The higher layers in the n-tier architecture do not need to know how the data is stored, just that it is stored. Everything else, from their perspective, is an implementation detail.
 - ### Designing an n-tier architecture, part 3 – services
