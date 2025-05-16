@@ -1,7 +1,9 @@
 // lib/views/plan_screen.dart
 
-import 'package:flutter/material.dart' show AppBar, BuildContext, Checkbox, Column, Expanded, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, SafeArea, Scaffold, ScrollController, State, StatefulWidget, Text, TextFormField, Widget;
-import 'package:master_plan/plan_provider.dart' show PlanProvider;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show AppBar, BuildContext, Checkbox, Colors, Column, Expanded, FloatingActionButton, FocusNode, FocusScope, Icon, Icons, ListTile, ListView, SafeArea, Scaffold, ScrollController, State, StatefulWidget, Text, TextFormField, Widget;
+import 'package:master_plan/plan_provider.dart';
+// import 'package:master_plan/plan_provider.dart' show PlanProvider;
 
 import '../models/data_layer.dart';
 
@@ -44,7 +46,8 @@ class _PlanScreenState extends State<PlanScreen> {
             child :_buildList()
           ),
           SafeArea(
-            child: Text(plan!.completenessMessage)
+            // child: Text(plan!.completenessMessage)
+            child: Text(plan.completenessMessage)
           )
         ],
       ),
@@ -57,9 +60,15 @@ class _PlanScreenState extends State<PlanScreen> {
 
     return FloatingActionButton(
       onPressed: () {
+        final controller = PlanProvider.of(context);
+        controller.addNewTask(plan);
+        setState(() {});
+        /* Move business logic to controller and provider
         setState(() {
-          plan!.tasks.add(Task());
+          // plan!.tasks.add(Task());
+          plan.tasks.add(Task());
         });
+        */
       },
       child: Icon(Icons.add)
     );
@@ -70,7 +79,8 @@ class _PlanScreenState extends State<PlanScreen> {
 
     return ListView.builder( // The ListView widget (the view) queries the Plan class (the model) to figure out how many items there are
       controller: scrollController,
-      itemCount: plan!.tasks.length,
+      // itemCount: plan!.tasks.length,
+      itemCount: plan.tasks.length,
       /*
       In the itemBuilder closure, we extract the specific Task that matches the item index and pass the entire model to the buildTaskTile method.
       */
@@ -84,32 +94,42 @@ class _PlanScreenState extends State<PlanScreen> {
   The UI's job is to query the model for its current state and draw itself accordingly.
   */
   Widget _buildTaskTile(Task task) {
-    return ListTile(
-      leading: Checkbox(
-        value: task.complete,
-        onChanged: (selected) {
-          setState(() {
-            task.complete = selected!;
-          });
-        }
+    return Dismissible(
+      key: ValueKey(task),
+      background: Container(color: Colors.red),
+      direction: DismissDirection.endToStart,
+      onDismissed: (_) {
+        final controller = PlanProvider.of(context);
+        controller.deleteTask(plan, task);
+        setState(() {});
+      },
+      child: ListTile(
+        leading: Checkbox(
+          value: task.complete,
+          onChanged: (selected) {
+            setState(() {
+              task.complete = selected!;
+            });
+          }
+        ),
+        title: TextFormField(
+          initialValue: task.description,
+          onFieldSubmitted: (text) {
+            setState(() {
+              task.description = text;
+            });
+          }
+        )
+      /*
+        title: TextField(
+          onChanged: (text) {
+            setState(() {
+              task.description = text;
+            });
+          }
+        )
+      */
       ),
-      title: TextFormField(
-        initialValue: task.description,
-        onFieldSubmitted: (text) {
-          setState(() {
-            task.description = text;
-          });
-        }
-      )
-    /*
-      title: TextField(
-        onChanged: (text) {
-          setState(() {
-            task.description = text;
-          });
-        }
-      )
-    */
     );
   }
 

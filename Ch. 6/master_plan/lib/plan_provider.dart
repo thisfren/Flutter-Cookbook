@@ -5,9 +5,10 @@
  * This widget extends InheritedWidget. 
  */
 
-import 'package:flutter/material.dart' show BuildContext, InheritedWidget, Widget;
+import 'package:flutter/material.dart' show BuildContext, InheritedWidget;
+import 'package:master_plan/controllers/plan_controller.dart';
 
-import './models/data_layer.dart';
+ // import './models/data_layer.dart';
 
 
 /*
@@ -17,15 +18,16 @@ Just like any other widget in Flutter, InheritedWidgets can also have child widg
 */
 class PlanProvider extends InheritedWidget {
   // final plan = Plan(); // First, we define an object that will store the plans
-  final plans = <Plan>[]; // Update the PlanProvider class so that it can handle multiple plans
+  // final plans = <Plan>[]; // Update the PlanProvider class so that it can handle multiple plans
+  final _controller = PlanController(); // Update the class so it holds PlanController instead of maintaining its own list
 
   /*
   Then, we define a default unnamed constructor, which takes in a key and a child, and passes them to the superclass (super).
   */
   PlanProvider({
     super.key,
-    required Widget child
-  }) : super(child: child);
+    required super.child
+  });
 
   /*
   InheritedWidget is an abstract class, so you must implement the updateShouldNotify method.
@@ -37,6 +39,13 @@ class PlanProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => false;
 
+  static PlanController of(BuildContext context) {
+    final PlanProvider? provider = context.dependOnInheritedWidgetOfExactType<PlanProvider>(); // This can return null if no PlanProvider is found
+    assert(provider != null, 'PlanProvider not found in context.'); // The app's logic depends on a PlanProvider being found
+    return provider!._controller;
+
+  }
+/*  
   /*
   To make the data accessible from anywhere in the app, we need to create our first of-context method.
   */
@@ -53,4 +62,5 @@ class PlanProvider extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<PlanProvider>();
     return provider?.plans;
   }
+*/
 }

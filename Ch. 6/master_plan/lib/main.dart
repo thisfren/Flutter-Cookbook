@@ -14,7 +14,7 @@ import 'plan_provider.dart';
 import 'views/plan_creator_screen.dart';
 
 
-void main() => runApp(MasterPlanApp());
+void main() => runApp(PlanProvider(child:MasterPlanApp()));
 
 
 class MasterPlanApp extends StatelessWidget {
@@ -29,11 +29,17 @@ class MasterPlanApp extends StatelessWidget {
       home: PlanProvider(child: PlanScreen())
     );
     */
+    /* Remove PlanProvider from inside the build method and add it as the topmost widget in the entire tree
     return PlanProvider(
       child: MaterialApp(
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple), useMaterial3: true),
         home: PlanCreatorScreen()
       )
+    );
+    */
+    return MaterialApp(
+      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple), useMaterial3: true),
+      home: PlanCreatorScreen()
     );
   }
 }

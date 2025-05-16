@@ -44,5 +44,17 @@ Users will be able to add, edit, delete, and complete their tasks.
     > #### Our InheritedWidget, which we created in the previous recipe, works perfectly for a single screen, but it is not ideal when you add a second. The higher in the tree your state object is stored, the easier it is for your children widgets to access it.
     > #### In this recipe, you are going to add another screen to the Master Plan app so that you can create multiple plans. Accomplishing this will require our State provider to be lifted higher in the tree, closer to its root.
 - ### Designing an n-tier architecture, part 1 – controllers
+    > #### There are many architectural patterns that have become popular in the last couple of years
+    > #### – Model View Controller (MVC), Model View ViewModel (MVVM), Model View Presenter (MVP), Coordinator, and several others.
+    > #### These patterns have become so numerous that they are sometimes pejoratively referred to as MV* patterns.
+    > #### This essentially means that no matter which pattern you choose, you need some kind of intermediary object between your model and your view.
+    > #### 
+    > #### A concept that is shared by all the popular patterns is the idea of tiers/layers (we will be using the terms tier and layer interchangeably throughout this chapter).
+    > #### Each tier in your app is a section of the MV* classes that have a single responsibility. 
+    > #### The term n-tier (sometimes called a multi-tier architecture) just means that you are not limited on the number of tiers in your app. You can have as many or as few as you need.
+    > #### The top-most tier is one that you are already familiar with – the view/widget tier. This tier is only interested in setting up the user interface. All the data and logic for the app should be delegated to a lower tier.
+    > #### The first tier that typically sits underneath the view tier is the controller layer. These classes are responsible for handling business logic and providing a link between the views and the lower layers in our app.
+    > #### In this recipe, we'll be moving the business logic for the Master Plan app from the view to a new controller class. We will also be adding the ability to delete notes from the list.
+
 - ### Designing an n-tier architecture, part 2 – repositories
 - ### Designing an n-tier architecture, part 3 – services

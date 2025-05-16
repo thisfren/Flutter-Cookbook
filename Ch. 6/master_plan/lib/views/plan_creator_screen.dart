@@ -1,8 +1,9 @@
 // lib/views/plan_creator_screen.dart
 
-import 'package:flutter/material.dart' show AppBar, BuildContext, Colors, Column, EdgeInsets, Expanded, FocusNode, FocusScope, Icon, Icons, InputDecoration, ListTile, ListView, MainAxisAlignment, Material, MaterialPageRoute, Navigator, Padding, Scaffold, State, StatefulWidget, Text, TextEditingController, TextField, Theme, Widget;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show AppBar, BuildContext, Colors, Column, EdgeInsets, Expanded, FocusNode, FocusScope, InputDecoration, ListTile, ListView, Material, MaterialPageRoute, Navigator, Padding, Scaffold, State, StatefulWidget, Text, TextEditingController, TextField, Theme, Widget;
 
-import '../models/plan.dart';
+// import '../models/plan.dart';
 import '../plan_provider.dart';
 import 'plan_screen.dart';
 
@@ -59,12 +60,18 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
   */
   void addPlan() {
     final text = textController.text;
+    final controller = PlanProvider.of(context);
+
+    controller.addNewPlan(text);
+
+    /* Removing all business logic so PlanController can handle it instead
     if (text.isEmpty) {
       return;
     }
 
     final plan = Plan()..name = text;
     PlanProvider.of(context)?.add(plan);
+    */
 
     textController.clear();
 
@@ -79,8 +86,10 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
   This component will also be aware of its content and return the appropriate set of widgets.
   */
   Widget _buildMasterPlans() {
-    final plans = PlanProvider.of(context);
+    // final plans = PlanProvider.of(context);
+    final plans = PlanProvider.of(context).plans;
 
+  /* This is never accessed
     if (plans == null) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,21 +102,32 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
         ]
       );
     }
+  */
 
     return ListView.builder(
       itemCount: plans.length,
       itemBuilder: (context, index) {
         final plan = plans[index];
-        return ListTile(
-          title: Text(plan.name),
-          subtitle: Text(plan.completenessMessage),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => PlanScreen(plan: plan)
-              )
-            );
-          }
+        return Dismissible(
+          key: ValueKey(plan),
+          background: Container(color: Colors.red),
+          direction: DismissDirection.endToStart,
+          onDismissed: (_) {
+            final controller = PlanProvider.of(context);
+            controller.deletePlan(plan);
+            setState(() {});
+          },
+          child: ListTile(
+            title: Text(plan.name),
+            subtitle: Text(plan.completenessMessage),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => PlanScreen(plan: plan)
+                )
+              );
+            }
+          ),
         );
       }
     );
